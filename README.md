@@ -2,6 +2,8 @@
 
 A Demo Flutter project for generating dynamic Carousel in ur app.
 
+![gif](https://github.com/flutterdb/flutter_dynamic_carousel/blob/master/carousel-gif.gif)
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
