@@ -51,6 +51,93 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
+  Widget buildTxtForm(){
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(18.0, 0.0, 18.0, 0.0),
+      child: TextFormField(
+        controller: numberTxtController,
+        style: TextStyle(color: Colors.blueGrey, fontSize: 18.0, fontWeight: FontWeight.bold),
+        obscureText: false,
+        onChanged: (value){
+          setState(() {
+
+          });
+        },
+        inputFormatters: [
+          FilteringTextInputFormatter.digitsOnly
+        ],
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+          isDense: true,
+          filled: true,
+          fillColor: Colors.white,
+          prefixIcon: const Icon(Icons.input, color: Colors.blueGrey,),
+          hintText: "Enter number",
+          labelText: "Enter number",
+          focusedBorder: _inputBorder,
+          enabledBorder: _inputBorder,
+          disabledBorder: _inputBorder,
+        ),
+      ),
+    );
+  }
+
+  Widget buildMaterialBtn(){
+    return MaterialButton(
+        color: Colors.orange,
+        child: Text('Generate', style: TextStyle(color: Colors.white, fontSize: 17.0),),
+        onPressed: () {
+          setState(() {
+          });
+        }
+    );
+  }
+
+  Widget buildCarouselRow(){
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(18.0, 0.0, 18.0, 0.0),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            for(int x =0; x < numberTxtController.text.length; x++)
+              buildCarousel(numberTxtController.text[x])
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildCarouselItems(int item){
+    return Padding(
+      padding: EdgeInsets.fromLTRB(0, 2.0, 0, 2.0),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black),
+          borderRadius: BorderRadius.all(Radius.circular(2.0)),
+          color: Colors.orange,
+        ),
+        padding: EdgeInsets.all(4.0),
+        //color: Colors.orange,
+        child: FittedBox(
+          fit: BoxFit.fitWidth,
+          child: Center(
+            child: Text(
+              item.toString(),
+              style: TextStyle(
+                  fontFamily: 'Open Sans Extrabold',
+                  fontStyle: FontStyle.normal,
+                  fontSize: 4.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,55 +149,9 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.fromLTRB(18.0, 0.0, 18.0, 0.0),
-              child: TextFormField(
-                controller: numberTxtController,
-                style: TextStyle(color: Colors.blueGrey, fontSize: 18.0, fontWeight: FontWeight.bold),
-                obscureText: false,
-                onChanged: (value){
-                  setState(() {
-
-                  });
-                },
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly
-                ],
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
-                  isDense: true,
-                  filled: true,
-                  fillColor: Colors.white,
-                  prefixIcon: const Icon(Icons.input, color: Colors.blueGrey,),
-                  hintText: "Enter number",
-                  labelText: "Enter number",
-                  focusedBorder: _inputBorder,
-                  enabledBorder: _inputBorder,
-                  disabledBorder: _inputBorder,
-                ),
-              ),
-            ),
-            MaterialButton(
-              color: Colors.orange,
-              child: Text('Generate', style: TextStyle(color: Colors.white, fontSize: 17.0),),
-              onPressed: () {
-                setState(() {
-                });
-              }
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(18.0, 0.0, 18.0, 0.0),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    for(int x =0; x < numberTxtController.text.length; x++)
-                      buildCarousel(numberTxtController.text[x])
-                  ],
-                ),
-              ),
-            ),
+            buildTxtForm(),
+            buildMaterialBtn(),
+            buildCarouselRow(),
           ],
         ),
       ),
@@ -138,32 +179,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             itemCount: 10,
-            itemBuilder: (ctx, item) => Padding(
-              padding: EdgeInsets.fromLTRB(0, 2.0, 0, 2.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.all(Radius.circular(2.0)),
-                  color: Colors.orange,
-                ),
-                padding: EdgeInsets.all(4.0),
-                //color: Colors.orange,
-                child: FittedBox(
-                  fit: BoxFit.fitWidth,
-                  child: Center(
-                    child: Text(
-                      item.toString(),
-                      style: TextStyle(
-                          fontFamily: 'Open Sans Extrabold',
-                          fontStyle: FontStyle.normal,
-                          fontSize: 4.0,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            itemBuilder: (ctx, item) => buildCarouselItems(item),
           )
       ),
     );
